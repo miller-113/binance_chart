@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/binance_chart/static/js/main.e2a65557.js",
+    "index.html": "/binance_chart/index.html",
+    "main.e2a65557.js.map": "/binance_chart/static/js/main.e2a65557.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.e2a65557.js"
+  ]
+}
