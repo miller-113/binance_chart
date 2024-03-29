@@ -1,4 +1,5 @@
 # **Managment Tool**
+<img src="https://github.com/miller-113/binance_chart/blob/main/public/Screenshot.png?raw=true">
 
 #### It is an application where you can create, update, sort, and perform many other task operations.
 
