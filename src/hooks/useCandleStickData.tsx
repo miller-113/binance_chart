@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
+
 import axios from "axios";
 
-export type Candle = [number, number, number, number, number];
+import { Candle } from "../shared";
+import { checkSignal } from "../shared/checkSignal";
+import { Signal } from "../shared";
 
 const useCandlestickData = (interval = "1m", symbol = "BTCUSDT") => {
+  const [signal, setSignal] = useState<Signal | null>(null);
   const [candles, setCandles] = useState<Candle[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,7 +18,7 @@ const useCandlestickData = (interval = "1m", symbol = "BTCUSDT") => {
           "https://api.binance.com/api/v3/klines",
           {
             params: {
-              symbol: "BTCUSDT",
+              symbol: symbol,
               interval: interval,
               limit: 50,
             },
@@ -52,13 +56,19 @@ const useCandlestickData = (interval = "1m", symbol = "BTCUSDT") => {
           parseFloat(candleData.k.h),
           parseFloat(candleData.k.l),
           parseFloat(candleData.k.c),
+          parseFloat(candleData.k.v),
         ];
         setCandles((prevCandles) => {
           const updatedCandles = [...prevCandles];
           const lastIndex = updatedCandles.length - 1;
-          const prevIndex = lastIndex - 1;
 
           if (candleData.k.x) {
+            updatedCandles[lastIndex] = newCandle;
+            const newSignal = checkSignal(updatedCandles);
+            if (newSignal) {
+              setSignal(newSignal);
+            }
+
             fetchCandles();
           } else {
             updatedCandles[lastIndex] = newCandle;
@@ -81,7 +91,7 @@ const useCandlestickData = (interval = "1m", symbol = "BTCUSDT") => {
     };
   }, [symbol, interval]);
 
-  return { candles, loading };
+  return { candles, loading, signal };
 };
 
 export default useCandlestickData;

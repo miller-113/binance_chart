@@ -2,18 +2,17 @@ import { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 
 import useCandlestickData from "../../hooks/useCandleStickData";
-import { drawArrows } from "../../shared";
+import { Candle, drawArrows } from "../../shared";
 import options_ from "./chartOption";
+import { ArrowCoordinate, CandlestickChartProps } from "../../shared";
 
-import { ArrowCoordinate } from "../../shared";
-interface CandlestickChartProps {
-  interval?: string;
-}
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CandlestickChart: React.FC<CandlestickChartProps> = ({
   interval = "1m",
 }) => {
-  const { candles, loading } = useCandlestickData(interval);
+  const { candles, loading, signal } = useCandlestickData(interval);
   const [arrowCoordinates, setArrowCoordinates] = useState<ArrowCoordinate[]>(
     []
   );
@@ -24,6 +23,29 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({
       setArrowCoordinates(updatedCoordinates);
     }
   }, [candles]);
+
+  useEffect(() => {
+    if (signal) {
+      toast.success(
+        `${signal.type};
+         ${signal.time.getHours()}:${signal.time.getMinutes()};
+         price: ${signal.price};
+         volume: ${signal.volume};`,
+        {
+          position: "top-right",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "light",
+          transition: Bounce,
+        }
+      );
+      console.log(new Date());
+      console.log(signal);
+    }
+  }, [signal]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -41,12 +63,26 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({
   const options: any = options_(arrowCoordinates);
 
   return (
-    <ReactApexChart
-      options={options}
-      series={series}
-      type="candlestick"
-      height={350}
-    />
+    <>
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="candlestick"
+        height={350}
+      />
+      <ToastContainer
+        position="top-right"
+        autoClose={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        theme="light"
+        transition={Bounce}
+      />
+      {/* {candleClose && <Signal candles={candles} />} */}
+    </>
   );
 };
 
