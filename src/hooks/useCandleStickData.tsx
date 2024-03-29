@@ -69,7 +69,7 @@ const useCandlestickData = (interval = "1m", symbol = "BTCUSDT") => {
               setSignal(newSignal);
             }
 
-            fetchCandles();
+            setTimeout(fetchCandles, 1000);
           } else {
             updatedCandles[lastIndex] = newCandle;
           }
