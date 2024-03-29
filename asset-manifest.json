@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/binance_chart/static/css/main.f029a054.css",
-    "main.js": "/binance_chart/static/js/main.0c7e7081.js",
+    "main.js": "/binance_chart/static/js/main.bd60d85e.js",
     "index.html": "/binance_chart/index.html",
     "main.f029a054.css.map": "/binance_chart/static/css/main.f029a054.css.map",
-    "main.0c7e7081.js.map": "/binance_chart/static/js/main.0c7e7081.js.map"
+    "main.bd60d85e.js.map": "/binance_chart/static/js/main.bd60d85e.js.map"
   },
   "entrypoints": [
     "static/css/main.f029a054.css",
-    "static/js/main.0c7e7081.js"
+    "static/js/main.bd60d85e.js"
   ]
 }
