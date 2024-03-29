@@ -28,12 +28,12 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({
     if (signal) {
       toast.success(
         `${signal.type};
-         ${signal.time.getHours()}:${signal.time.getMinutes()};
+         time: ${signal.time.getHours()}:${signal.time.getMinutes()};
          price: ${signal.price};
          volume: ${signal.volume};`,
         {
           position: "top-right",
-          autoClose: false,
+          autoClose: 10000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -72,8 +72,8 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({
       />
       <ToastContainer
         position="top-right"
-        autoClose={false}
-        newestOnTop={true}
+        autoClose={10000}
+        newestOnTop={false}
         closeOnClick
         rtl={true}
         pauseOnFocusLoss
